@@ -50,7 +50,7 @@ Thanos comes with a highly efficient gRPC-based Store API for metric data access
 
 Components in a Thanos cluster are connected through a gossip protocol to advertise membership and propagate metadata about the data and services they provide.
 
-We a set of initial peers addresses to the sidecar. They only must be valid on startup and subsequent cluster changes are automatically adapted to.
+We provide a set of initial peers addresses to the sidecar. They only must be valid on startup and subsequent cluster changes are automatically adapted to.
 
 ```
 thanos sidecar \
@@ -70,7 +70,7 @@ Additional flags for cluster configuration exist but are typically not needed. C
 
 ### External Labels
 
-Prometheus allows to configure "external labels" for a Prometheus instance. Those are meant to globally identify the role of a given Prometheus instance. As Thanos aims to aggregate data across all Prometheus servers, providing a consistent of external labels for all Prometheus server becomes crucial!
+Prometheus allows to configure "external labels" for a Prometheus instance. Those are meant to globally identify the role of a given Prometheus instance. As Thanos aims to aggregate data across all Prometheus servers, providing a consistent set of external labels for all Prometheus server becomes crucial!
 
 Every Prometheus instance _must_ have a globally unique set of identifying labels. For example, in Prometheus's configuration file:
 
@@ -125,7 +125,7 @@ thanos store \
     --cluster.peers all.thanos.internal.org 
 ```
 
-The store gateway occupies small amounts of disk space for caching basic information about data in the object storage. This will rarely exceed more than a few gigabytes and is used to improve restart times. It is not useful but not required to preserve it across restarts.
+The store gateway occupies small amounts of disk space for caching basic information about data in the object storage. This will rarely exceed more than a few gigabytes and is used to improve restart times. It is useful but not required to preserve it across restarts.
 
 * _[Example Kubernetes manifest](../kube/manifests/thanos-store.yaml)_
 
@@ -133,7 +133,7 @@ The store gateway occupies small amounts of disk space for caching basic informa
 
 A local Prometheus installation periodically compacts older data to improve query efficieny. Since the sidecar backs up data as soon as possible, we need a way to apply the same process to data in the object storage.
 
-The compactor component simple scans the object storage and processes compaction where required. At the same time it is responsible for creating downsampled copies of data to speed up queries.
+The compactor component simply scans the object storage and processes compaction where required. At the same time it is responsible for creating downsampled copies of data to speed up queries.
 
 ```
 thanos compact \
